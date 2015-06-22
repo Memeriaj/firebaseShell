@@ -1,0 +1,14 @@
+{
+  "name": "fsh-serverScript",
+  "version": "0.1.0",
+  "description": "The script to run the the background process on the server.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Memeriaj/firebaseShell.git"
+  },
+  "author": "Alex Memering",
+  "homepage": "https://github.com/Memeriaj/firebaseShell",
+  "license": "ISC",
+  "private": true
+}

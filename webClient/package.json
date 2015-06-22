@@ -1,0 +1,14 @@
+{
+  "name": "fsh-webClient",
+  "version": "0.1.0",
+  "description": "The web interface to access and use firebase shell.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Memeriaj/firebaseShell.git"
+  },
+  "author": "Alex Memering",
+  "homepage": "https://github.com/Memeriaj/firebaseShell",
+  "license": "ISC",
+  "private": true
+}
