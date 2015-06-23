@@ -10,15 +10,20 @@ var commandsFb = machineFb.child('commands');
 var historyFb = machineFb.child('history');
 
 function executeCommand(command, logFunction) {
-  exec(command, logFunction);
+  exec(command, logFunction(command));
 }
 
-function logToFirebase(error, stdout, stderr) {
-  if (error) {
-    historyFb.push({'error': error});
-  } else {
-    historyFb.push({'stdout': stdout, 'stderr': stderr});
-  }
+function logToFirebase(command) {
+  return function(error, stdout, stderr) {
+    var toSend = {'command': command};
+    if (error) {
+      toSend.error = error;
+    } else {
+      toSend.stdout = stdout;
+      toSend.stderr = stderr;
+    }
+    historyFb.push(toSend);
+  };
 }
 
 commandsFb.on('child_added', function(snapshot, prevChildKey) {
