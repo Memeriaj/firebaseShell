@@ -10,10 +10,17 @@
   </head>
   <body ng-app="project">
     <h1>Firebase Shell</h1>
-    <div ng-controller="StartController as start">
-      <p>Here is some angular: 2+2={{2+2}}</p>
-      <p>Here is some data: {{start.data}}</p>
-      <button class="btn btn-default" type="submit">Bootstrap Button</button>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="row" ng-controller="HistoryController as hist">
+          <ul>
+            <li ng-repeat="line in hist.commands">
+              <p>{{line.command}}</p>
+              <p>{{line.stdout}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </body>
 </html>
