@@ -2,5 +2,11 @@
 node_modules/
 npm-debug.log
 
+# Bower
+bower_components
+
+# Production
+build
+
 # Mac OS-X
 .DS_Store

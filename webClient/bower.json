@@ -1,0 +1,13 @@
+{
+  "name": "fsh-webClient",
+  "version": "0.1.0",
+  "description": "The web interface to access and use firebase shell.",
+  "author": "Alex Memering",
+  "homepage": "https://github.com/Memeriaj/firebaseShell",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angularfire": "^1.1.1",
+    "bootstrap": "^3.3.5"
+  }
+}

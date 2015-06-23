@@ -2,13 +2,19 @@
   "name": "fsh-webClient",
   "version": "0.1.0",
   "description": "The web interface to access and use firebase shell.",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/Memeriaj/firebaseShell.git"
   },
   "author": "Alex Memering",
   "homepage": "https://github.com/Memeriaj/firebaseShell",
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "gulp": "3.8.11",
+    "gulp-eslint": "0.12.0",
+    "lodash": "3.8.0",
+    "run-sequence": "1.1.0"
+  },
   "license": "ISC",
   "private": true
 }
