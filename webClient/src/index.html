@@ -1,8 +1,19 @@
 <!doctype html>
 <html>
   <head>
+    <script src="angular.js"></script>
+    <script src="angularfire.js"></script>
+    <script src="firebase.js"></script>
+    <link rel="stylesheet" href="bootstrap.css">
+
+    <script src="project.js"></script>
   </head>
-  <body>
-    Hello, world!
+  <body ng-app="project">
+    <h1>Firebase Shell</h1>
+    <div ng-controller="StartController as start">
+      <p>Here is some angular: 2+2={{2+2}}</p>
+      <p>Here is some data: {{start.data}}</p>
+      <button class="btn btn-default" type="submit">Bootstrap Button</button>
+    </div>
   </body>
 </html>
