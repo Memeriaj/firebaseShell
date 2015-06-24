@@ -2,9 +2,8 @@
 
 angular.module('project', ['firebase', 'ngRoute'])
   .value('fbRoot', 'https://fb-shell.firebaseio.com/')
-  .value('currentUser', 'mainMe')
-  .service('rootRef', function(fbRoot, currentUser) {
-    return new Firebase(fbRoot + 'users/' + currentUser + '/');
+  .service('rootRef', function(fbRoot) {
+    return new Firebase(fbRoot);
   })
 
   .config(['$routeProvider', function($routeProvider) {
@@ -13,22 +12,22 @@ angular.module('project', ['firebase', 'ngRoute'])
         templateUrl: 'loginView/login.html',
         controller: 'LoginController as login'
       })
-      .when('/user/', {
-        templateUrl: 'shellView/shell.html'
+      .when('/user/:uid', {
+        templateUrl: 'shellView/shell.html',
+        controller: 'ShellController as shell'
       })
       .otherwise({
         redirectTo: '/'
       });
   }])
 
-  .controller('LoginController', ['rootRef', '$location', function(rootRef, $location) {
-    this.signUp = false;
-    var $scope = this;
+  .controller('LoginController', ['$scope', 'rootRef', '$location', function($scope, rootRef, $location) {
+    $scope.signUp = false;
 
-    this.attemptLogin = function() {
-      var authCreds = {email: this.email, password: this.password};
+    $scope.attemptLogin = function() {
+      var authCreds = {email: $scope.email, password: $scope.password};
       console.log(authCreds);
-      if (this.signUp) {
+      if ($scope.signUp) {
         rootRef.createUser(authCreds, function(error, userData) {
           if (!error) {
             $scope.signUp = false;
@@ -45,28 +44,30 @@ angular.module('project', ['firebase', 'ngRoute'])
           if (error) {
             $scope.password = '';
           } else {
-            $location.path('/user/');
+            $location.path('/user/' + authData.uid).replace();
+            $scope.$apply();
           }
         });
       }
     };
   }])
 
-  .controller('HistoryController', ['$firebaseArray', 'rootRef', function($firebaseArray, rootRef) {
-    var machine = 'tester';
+  .controller('ShellController', ['$firebaseArray', 'rootRef', '$routeParams', function($firebaseArray, rootRef, $routeParams) {
+    var userId = $routeParams.uid;
+    var machine = 'desktop';
     var numLines = 12;
 
-    var histRef = rootRef.child('/machines/' + machine + '/history/');
+    var mainRef = rootRef.child('/users/' + userId + '/machines/' + machine);
+
+    var histRef = mainRef.child('/history/');
     this.commands = $firebaseArray(histRef.limitToLast(numLines));
+
+    var commandRef = mainRef.child('/commands/');
+    var commandArray = $firebaseArray(commandRef);
 
     this.correctNewline = function(str) {
       return str.trim().split('\n');
     };
-  }])
-  .controller('CommandController', ['$firebaseArray', 'rootRef', function($firebaseArray, rootRef) {
-    var machine = 'tester';
-    var commandRef = rootRef.child('/machines/' + machine + '/commands/');
-    var commandArray = $firebaseArray(commandRef);
 
     this.sendCommand = function() {
       commandArray.$add(this.newCommand);

@@ -3,18 +3,18 @@
     <div class="row">
       <form>
         <div class="form-group">
-          <button type="button" class="btn btn-default btn-large" ng-class="{active: !login.signUp}" ng-click="login.signUp = false">Login</button>
-          <button type="button" class="btn btn-default btn-large" ng-class="{active: login.signUp}" ng-click="login.signUp = true">Register</button>
+          <button type="button" class="btn btn-default btn-large" ng-class="{active: !signUp}" ng-click="signUp = false">Login</button>
+          <button type="button" class="btn btn-default btn-large" ng-class="{active: signUp}" ng-click="signUp = true">Register</button>
         </div>
         <div class="form-group">
           <label for="loginEmail">Email address</label>
-          <input type="email" class="form-control" id="loginEmail" placeholder="Email" ng-model="login.email">
+          <input type="email" class="form-control" id="loginEmail" placeholder="Email" ng-model="email">
         </div>
         <div class="form-group">
           <label for="loginPassword">Password</label>
-          <input type="password" class="form-control" id="loginPassword" placeholder="Password" ng-model="login.password">
+          <input type="password" class="form-control" id="loginPassword" placeholder="Password" ng-model="password">
         </div>
-        <button type="submit" class="btn btn-default" ng-click="login.attemptLogin()">Submit</button>
+        <button type="submit" class="btn btn-default" ng-click="attemptLogin()">Submit</button>
       </form>
     </div>
   </div>

@@ -1,25 +1,25 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <div class="row" ng-controller="HistoryController as hist">
+    <div class="row" >
       <ul>
-        <li ng-repeat="line in hist.commands">
+        <li ng-repeat="line in shell.commands">
           <p>{{line.command}}</p>
-          <div ng-repeat="output in hist.correctNewline(line.stdout)">
+          <div ng-repeat="output in shell.correctNewline(line.stdout)">
             <p>{{output}}</p>
           </div>
         </li>
       </ul>
     </div>
-    <div class="row" ng-controller="CommandController as comd">
+    <div class="row">
       <form class="form-inline">
         <div class="form-group">
           <label class="sr-only" for="commandEntry">Shell command entry</label>
           <div class="input-group">
             <div class="input-group-addon">&gt;</div>
-            <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="comd.newCommand">
+            <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="shell.newCommand">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" ng-click="comd.sendCommand()">Execute</button>
+        <button type="submit" class="btn btn-primary" ng-click="shell.sendCommand()">Execute</button>
       </form>
     </div>
   </div>
