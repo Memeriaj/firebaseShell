@@ -2,8 +2,9 @@
 
 angular.module('project', ['firebase'])
   .value('fbRoot', 'https://fb-shell.firebaseio.com/')
-  .service('rootRef', function(fbRoot) {
-    return new Firebase(fbRoot);
+  .value('currentUser', 'mainMe')
+  .service('rootRef', function(fbRoot, currentUser) {
+    return new Firebase(fbRoot + 'users/' + currentUser + '/');
   })
   .controller('HistoryController', ['$firebaseArray', 'rootRef', function($firebaseArray, rootRef) {
     var machine = 'tester';
