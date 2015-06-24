@@ -9,16 +9,30 @@
     <script src="project.js"></script>
   </head>
   <body ng-app="project">
-    <h1>Firebase Shell</h1>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
+        <h1>Firebase Shell</h1>
         <div class="row" ng-controller="HistoryController as hist">
           <ul>
             <li ng-repeat="line in hist.commands">
               <p>{{line.command}}</p>
-              <p>{{line.stdout}}</p>
+              <div ng-repeat="output in hist.correctNewline(line.stdout)">
+                <p>{{output}}</p>
+              </div>
             </li>
           </ul>
+        </div>
+        <div class="row" ng-controller="CommandController as comd">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="sr-only" for="commandEntry">Shell command entry</label>
+              <div class="input-group">
+                <div class="input-group-addon">&gt;</div>
+                <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="comd.newCommand">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="comd.sendCommand()">Execute</button>
+          </form>
         </div>
       </div>
     </div>
