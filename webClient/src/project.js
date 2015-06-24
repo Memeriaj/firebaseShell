@@ -10,7 +10,8 @@ angular.module('project', ['firebase', 'ngRoute'])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'loginView/login.html'
+        templateUrl: 'loginView/login.html',
+        controller: 'LoginController as login'
       })
       .when('/user/', {
         templateUrl: 'shellView/shell.html'
@@ -18,6 +19,37 @@ angular.module('project', ['firebase', 'ngRoute'])
       .otherwise({
         redirectTo: '/'
       });
+  }])
+
+  .controller('LoginController', ['rootRef', '$location', function(rootRef, $location) {
+    this.signUp = false;
+    var $scope = this;
+
+    this.attemptLogin = function() {
+      var authCreds = {email: this.email, password: this.password};
+      console.log(authCreds);
+      if (this.signUp) {
+        rootRef.createUser(authCreds, function(error, userData) {
+          if (!error) {
+            $scope.signUp = false;
+          }
+          $scope.email = '';
+          $scope.password = '';
+        });
+      } else {
+        console.log('signing in');
+        rootRef.authWithPassword(authCreds, function(error, authData) {
+          console.log('called back');
+          console.log(error);
+          console.log(authData);
+          if (error) {
+            $scope.password = '';
+          } else {
+            $location.path('/user/');
+          }
+        });
+      }
+    };
   }])
 
   .controller('HistoryController', ['$firebaseArray', 'rootRef', function($firebaseArray, rootRef) {
