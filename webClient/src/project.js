@@ -1,11 +1,25 @@
 'use strict';
 
-angular.module('project', ['firebase'])
+angular.module('project', ['firebase', 'ngRoute'])
   .value('fbRoot', 'https://fb-shell.firebaseio.com/')
   .value('currentUser', 'mainMe')
   .service('rootRef', function(fbRoot, currentUser) {
     return new Firebase(fbRoot + 'users/' + currentUser + '/');
   })
+
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'loginView/login.html'
+      })
+      .when('/user/', {
+        templateUrl: 'shellView/shell.html'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  }])
+
   .controller('HistoryController', ['$firebaseArray', 'rootRef', function($firebaseArray, rootRef) {
     var machine = 'tester';
     var numLines = 12;
