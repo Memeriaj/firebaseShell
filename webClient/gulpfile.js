@@ -26,7 +26,8 @@ var paths = {
       'bower_components/firebase/firebase.js'
     ],
     css: [
-      'bower_components/bootstrap/dist/css/bootstrap.css'
+      'bower_components/bootstrap/dist/css/bootstrap.css',
+      'src/**/*.css'
     ]
   },
   rules: 'rules.yaml'

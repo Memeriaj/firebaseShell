@@ -9,9 +9,16 @@
     <link rel="stylesheet" href="bootstrap.css">
 
     <script src="project.js"></script>
+    <script src="loginView/login.js"></script>
+    <script src="shellView/shell.js"></script>
+    <link rel="stylesheet" href="shellView/shell.css">
   </head>
   <body ng-app="project">
-    <h1>Firebase Shell</h1>
-    <div ng-view></div>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Firebase Shell</h1>
+        <div ng-view></div>
+      </div>
+    </div>
   </body>
 </html>

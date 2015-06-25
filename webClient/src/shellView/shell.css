@@ -1,0 +1,42 @@
+#termbody {
+    font-family: Andale Mono, monospace;  line-height: 1em;
+    font-size:13px;
+    float: left;
+    width: 100%;
+    min-height:130px;
+    background:#000;
+    padding:10px;
+    line-height:1.5em;
+}
+#termbody p { 
+   color: #63de00!important; 
+}
+
+#termbody:hover .cursor {
+    -webkit-animation-name: blink;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: blink;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-iteration-count: infinite;
+}
+  
+#termbody p::-webkit-selection  {
+    background:#0b209e;
+}
+#termbody p::selection { background:#0b209e; }
+#termbody p::-moz-selection { background:#0b209e; }
+
+#termbody p {
+  margin-top:5px;
+  margin-bottom:5px;
+  font-size:13px;
+}
+
+ul{ list-style-type: none; }
+.termbody:before{
+  content:">"; position:relative;
+  left:-5px;
+  color: #63de00!important;
+}
+.termbody{ text-indent:-5px; }

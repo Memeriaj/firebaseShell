@@ -1,26 +1,22 @@
+<div class="row" id="termbody">
+  <ul>
+    <li ng-repeat="line in shell.commands">
+      <p class="termbody">{{line.command}}</p>
+      <div ng-repeat="output in shell.correctNewline(line.stdout)">
+        <p>{{output}}</p>
+      </div>
+    </li>
+  </ul>
+</div>
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="row" >
-      <ul>
-        <li ng-repeat="line in shell.commands">
-          <p>{{line.command}}</p>
-          <div ng-repeat="output in shell.correctNewline(line.stdout)">
-            <p>{{output}}</p>
-          </div>
-        </li>
-      </ul>
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="sr-only" for="commandEntry">Shell command entry</label>
+      <div class="input-group">
+        <div class="input-group-addon">&gt;</div>
+        <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="shell.newCommand">
+      </div>
     </div>
-    <div class="row">
-      <form class="form-inline">
-        <div class="form-group">
-          <label class="sr-only" for="commandEntry">Shell command entry</label>
-          <div class="input-group">
-            <div class="input-group-addon">&gt;</div>
-            <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="shell.newCommand">
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" ng-click="shell.sendCommand()">Execute</button>
-      </form>
-    </div>
-  </div>
+    <button type="submit" class="btn btn-primary" ng-click="shell.sendCommand()">Execute</button>
+  </form>
 </div>
