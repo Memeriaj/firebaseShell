@@ -2,7 +2,7 @@
   <ul>
     <li ng-repeat="line in shell.commands">
       <p class="indentPointer">{{line.command}}</p>
-      <div ng-repeat="output in shell.correctNewline(line.stdout)">
+      <div ng-repeat="output in shell.generateOutput(line)">
         <p>{{output}}</p>
       </div>
     </li>
@@ -17,16 +17,4 @@
       <button type="submit" class="btn btn-primary termColor" ng-click="shell.sendCommand()">Execute</button>
     </span>
   </div>
-<!--
-  <form class="form-inline">
-    <div class="form-group">
-      <label class="sr-only" for="commandEntry">Shell command entry</label>
-      <div class="input-group">
-        <div class="input-group-addon">&gt;</div>
-        <input type="text" class="form-control" id="commandEntry" placeholder="Command" ng-model="shell.newCommand">
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary" ng-click="shell.sendCommand()">Execute</button>
-  </form>
-!-->
 </div>

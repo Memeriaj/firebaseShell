@@ -14,8 +14,11 @@ angular.module('project')
     var commandRef = mainRef.child('/commands/');
     var commandArray = $firebaseArray(commandRef);
 
-    this.correctNewline = function(str) {
-      return str.trim().split('\n');
+    this.generateOutput = function(line) {
+      if (line.error) {
+        return ['ERROR: code ' + line.error.code];
+      }
+      return line.stdout.trim().split('\n');
     };
 
     this.sendCommand = function() {
