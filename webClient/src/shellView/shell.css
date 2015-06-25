@@ -34,9 +34,14 @@
 }
 
 ul{ list-style-type: none; }
-.termbody:before{
+.indentPointer:before{
   content:">"; position:relative;
   left:-5px;
   color: #63de00!important;
 }
-.termbody{ text-indent:-5px; }
+.indentPointer{ text-indent:-5px; }
+
+.termColor{
+  background: #000;
+  color: #63de00!important;
+}

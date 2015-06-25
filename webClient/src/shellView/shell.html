@@ -1,7 +1,7 @@
 <div class="row" id="termbody">
   <ul>
     <li ng-repeat="line in shell.commands">
-      <p class="termbody">{{line.command}}</p>
+      <p class="indentPointer">{{line.command}}</p>
       <div ng-repeat="output in shell.correctNewline(line.stdout)">
         <p>{{output}}</p>
       </div>
@@ -9,6 +9,15 @@
   </ul>
 </div>
 <div class="row">
+  <div class="input-group termColor">
+    <label class="sr-only" for="commandEntry">Shell command entry</label>
+    <span class="input-group-addon termColor" id="sizing-addon1">&gt;</span>
+    <input type="text" class="form-control termColor" id="commandEntry" placeholder="Command" ng-model="shell.newCommand" aria-describedby="sizing-addon1">
+    <span class="input-group-btn termColor">
+      <button type="submit" class="btn btn-primary termColor" ng-click="shell.sendCommand()">Execute</button>
+    </span>
+  </div>
+<!--
   <form class="form-inline">
     <div class="form-group">
       <label class="sr-only" for="commandEntry">Shell command entry</label>
@@ -19,4 +28,5 @@
     </div>
     <button type="submit" class="btn btn-primary" ng-click="shell.sendCommand()">Execute</button>
   </form>
+!-->
 </div>
