@@ -2,9 +2,9 @@
   <ul>
     <li ng-repeat="line in shell.commands">
       <p class="indentPointer">{{line.command}}</p>
-      <div ng-repeat="output in shell.generateOutput(line)">
-        <p>{{output}}</p>
-      </div>
+      <p ng-repeat="output in shell.generateOutput(line)">
+        {{output}}
+      </p>
     </li>
   </ul>
 </div>
