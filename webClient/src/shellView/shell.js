@@ -1,28 +1,75 @@
 'use strict';
 
 angular.module('project')
-  .controller('ShellController', ['$firebaseArray', 'rootRef', '$routeParams', function($firebaseArray, rootRef, $routeParams) {
-    var userId = $routeParams.uid;
-    var machine = 'desktop';
-    var numLines = 12;
+  .controller('MachineController', ['$firebaseArray', 'rootRef', '$routeParams', function($firebaseArray, rootRef, $routeParams) {
+    this.machineRef = rootRef.child('/users/' + $routeParams.uid + '/machines/');
+    this.machineArray = $firebaseArray(this.machineRef);
+  }])
 
-    var mainRef = rootRef.child('/users/' + userId + '/machines/' + machine);
+  .controller('ShellController', ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
+    var numLines = 10;
+    var commandArray = [];
 
-    var histRef = mainRef.child('/history/');
-    this.commands = $firebaseArray(histRef.limitToLast(numLines));
+    $scope.intialize = function(mn, machineRef) {
+      var mainRef = machineRef.child(mn);
 
-    var commandRef = mainRef.child('/commands/');
-    var commandArray = $firebaseArray(commandRef);
+      var histRef = mainRef.child('/history/');
+      $scope.commands = $firebaseArray(histRef.limitToLast(numLines));
 
-    this.generateOutput = function(line) {
+      var commandRef = mainRef.child('/commands/');
+      commandArray = $firebaseArray(commandRef);
+    };
+
+    $scope.generateOutput = function(line) {
       if (line.error) {
         return ['ERROR: code ' + line.error.code];
       }
       return line.stdout.trim().split('\n');
     };
 
-    this.sendCommand = function() {
-      commandArray.$add(this.newCommand);
-      this.newCommand = '';
+    $scope.sendCommand = function() {
+      commandArray.$add($scope.newCommand);
+      $scope.newCommand = '';
     };
-  }]);
+  }])
+
+  .directive('tabs', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {},
+      controller: function($scope, $element) {
+        var panes = $scope.panes = [];
+ 
+        $scope.select = function(pane) {
+          angular.forEach(panes, function(pane) {
+            pane.selected = false;
+          });
+          pane.selected = true;
+        }
+ 
+        this.addPane = function(pane) {
+          if (panes.length == 0) $scope.select(pane);
+          panes.push(pane);
+        }
+      },
+      templateUrl: 'shellView/tabs.html',
+      replace: true
+    };
+  })
+ 
+  .directive('pane', function() {
+    return {
+      require: '^tabs',
+      restrict: 'E',
+      transclude: true,
+      scope: { title: '@' },
+      link: function(scope, element, attrs, tabsController) {
+        tabsController.addPane(scope);
+      },
+      template:
+        '<div class="tab-pane" ng-class="{active: selected}" ng-transclude>' +
+        '</div>',
+      replace: true
+    };
+  });

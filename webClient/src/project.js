@@ -14,7 +14,7 @@ angular.module('project', ['firebase', 'ngRoute'])
       })
       .when('/user/:uid', {
         templateUrl: 'shellView/shell.html',
-        controller: 'ShellController as shell'
+        controller: 'MachineController as mnList'
       })
       .otherwise({
         redirectTo: '/'

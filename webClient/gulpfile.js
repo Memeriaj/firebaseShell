@@ -15,6 +15,9 @@ var paths = {
   html: [
     'src/**/*.html'
   ],
+  css: [
+    'src/**/*.css'
+  ],
   tests: [],
   dest: 'build',
   libs: {
@@ -26,8 +29,7 @@ var paths = {
       'bower_components/firebase/firebase.js'
     ],
     css: [
-      'bower_components/bootstrap/dist/css/bootstrap.css',
-      'src/**/*.css'
+      'bower_components/bootstrap/dist/css/bootstrap.css'
     ]
   },
   rules: 'rules.yaml'
@@ -54,7 +56,8 @@ gulp.task('js', function() {
 });
 
 gulp.task('css', function() {
-  return gulp.src(paths.libs.css)
+  var cssFiles = _.union(paths.css, paths.libs.css);
+  return gulp.src(cssFiles)
     .pipe(gulp.dest(paths.dest));
 });
 
@@ -68,6 +71,7 @@ gulp.task('rules', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.html, ['html']);
   gulp.watch(paths.js, ['js']);
+  gulp.watch(paths.css, ['css']);
   gulp.watch(paths.rules, ['rules']);
 });
 

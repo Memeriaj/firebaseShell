@@ -1,20 +1,27 @@
-<div class="row" id="termbody">
-  <ul>
-    <li ng-repeat="line in shell.commands">
-      <p class="indentPointer">{{line.command}}</p>
-      <p ng-repeat="output in shell.generateOutput(line)">
-        {{output}}
-      </p>
-    </li>
-  </ul>
-</div>
 <div class="row">
-  <div class="input-group termColor">
-    <label class="sr-only" for="commandEntry">Shell command entry</label>
-    <span class="input-group-addon termColor" id="sizing-addon1">&gt;</span>
-    <input type="text" class="form-control termColor" id="commandEntry" placeholder="Command" ng-model="shell.newCommand" aria-describedby="sizing-addon1">
-    <span class="input-group-btn termColor">
-      <button type="submit" class="btn btn-primary termColor" ng-click="shell.sendCommand()">Execute</button>
-    </span>
-  </div>
+  <tabs>
+    <pane ng-repeat="machineName in mnList.machineArray" title="{{machineName.$id}}">
+      <div ng-controller="ShellController" ng-init="intialize(machineName.$id, mnList.machineRef)">
+        <ul id="termbody">
+          <li ng-repeat="line in commands">
+            <p class="indentPointer">{{line.command}}</p>
+            <p ng-repeat="output in generateOutput(line)">
+              {{output}}
+            </p>
+          </li>
+        </ul>
+
+        <form ng-submit="sendCommand()">
+          <div class="input-group termColor">
+            <label class="sr-only" for="commandEntry">Shell command entry</label>
+            <span class="input-group-addon termColor" id="sizing-addon1">&gt;</span>
+            <input type="text" class="form-control termColor" id="commandEntry" placeholder="Command" ng-model="newCommand" aria-describedby="sizing-addon1">
+            <span class="input-group-btn termColor">
+              <button type="submit" class="btn btn-primary termColor">Execute</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </pane>
+  </tabs>
 </div>
