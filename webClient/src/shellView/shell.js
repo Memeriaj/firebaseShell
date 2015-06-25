@@ -30,6 +30,19 @@ angular.module('project')
     $scope.sendCommand = function() {
       commandArray.$add($scope.newCommand);
       $scope.newCommand = '';
+      return;
+    };
+
+    var curPrevCount = 0;
+    $scope.previousCommand = function() {
+      var curLen = $scope.commands.length;
+      if (curPrevCount < 1 || curPrevCount > curLen ||
+        $scope.newCommand !== $scope.commands[curLen - curPrevCount].command) {
+        curPrevCount = 0;
+      }
+      curPrevCount++;
+      $scope.newCommand = $scope.commands[curLen - curPrevCount].command;
+      return;
     };
   }])
 
