@@ -2,7 +2,9 @@
 
 var _ = require('lodash');
 var gulp = require('gulp');
+var blaze = require('gulp-blaze');
 var eslint = require('gulp-eslint');
+var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 
 
@@ -26,7 +28,8 @@ var paths = {
     css: [
       'bower_components/bootstrap/dist/css/bootstrap.css'
     ]
-  }
+  },
+  rules: 'rules.yaml'
 };
 
 
@@ -54,12 +57,20 @@ gulp.task('css', function() {
     .pipe(gulp.dest(paths.dest));
 });
 
+gulp.task('rules', function() {
+  gulp.src(paths.rules)
+    .pipe(blaze({debug: false}))
+    .pipe(rename(function(path) { path.extname = '.json' }))
+    .pipe(gulp.dest(paths.dest));
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.html, ['html']);
   gulp.watch(paths.js, ['js']);
+  gulp.watch(paths.rules, ['rules']);
 });
 
-gulp.task('build', ['html', 'js', 'css']);
+gulp.task('build', ['html', 'js', 'css', 'rules']);
 
 gulp.task('default', function(done) {
   runSequence('lint', 'build', function(error) {

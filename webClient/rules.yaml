@@ -1,0 +1,48 @@
+functions:            #reusable boolean functions
+  - isLoggedIn():     auth.username !== null
+  - createOnly():     next.exists() && !prev.exists()
+  - deleteOnly():     prev.exists() && !next.exists()
+  - isUser(username): auth.uid === username
+
+schema:
+  definitions:         #create a reusable message model
+    message:           #for use in the in and out boxes
+      type: object
+
+  type: object
+  properties:
+    users: # the users subtree is a collection of users
+      type: object
+      $userid: #wildchild expression of many children
+        type: object
+        properties:
+          machines:
+            type: object
+            $machineName:
+              type: object
+              properties:
+                exists:
+                  type: boolean
+                history:
+                  type: object
+                  $line:
+                    type: object
+                    properties:
+                      command:
+                        type: string
+                      stderr:
+                        type: string
+                      stdout:
+                        type: string
+                      error:
+                        type: object
+                commands:
+                  type: object
+                  $pend:
+                    type: string
+  additionalProperties: false
+
+access:
+  - location: users/$userid/
+    write:    isUser($userid)
+    read:     isUser($userid)
