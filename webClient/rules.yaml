@@ -6,7 +6,7 @@ functions:            #reusable boolean functions
 
 schema:
   definitions:         #create a reusable message model
-    message:           #for use in the in and out boxes
+    email:
       type: object
 
   type: object
@@ -40,9 +40,40 @@ schema:
                   type: object
                   $pend:
                     type: string
+                otherUsers:
+                  type: object
+                  properties:
+                    pending:
+                      type: object
+                      $pendEmails:
+                        type: string
+                        constraints:  (auth.uid === next && createOnly()) ||
+                                      (isUser($userid) && deleteOnly())
+                    allowed:
+                      type: object
+                      $ou:
+                        type: string
+                redirectUser:
+                  type: string
+    emails:
+      type: object
+      $email:
+        type: string
+        constraints:  auth.uid === next && createOnly()
   additionalProperties: false
 
 access:
   - location: users/$userid/
     write:    isUser($userid)
     read:     isUser($userid)
+
+  - location: emails/
+    write:    isLoggedIn()
+    read:     isLoggedIn()
+
+  - location: users/$userid/machines/$machineName/otherUsers/pending/
+    write:    isLoggedIn()
+
+  - location: users/$userid/machines/$machineName/
+    write:    data.otherUsers.allowed.child(auth.uid).exists()
+    read:     data.otherUsers.allowed.child(auth.uid).exists()
